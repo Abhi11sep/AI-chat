@@ -23,6 +23,9 @@ function App() {
 
   const sendMessage = async () => {
     try {
+
+      console.log(import.meta.env);
+      console.log(import.meta.env.VITE_API_URL);
       const currentMessage = chat.trim();
 
       if (!currentMessage) return;
@@ -59,8 +62,8 @@ function App() {
 
       setChat("");
 
-      // Send only the conversation (without the empty assistant)
-      const response = await fetch("http://localhost:5000/api/chat", {
+      // the conversation
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,6 +82,7 @@ function App() {
         if (done) break;
 
         const chunk = decoder.decode(value);
+        console.log(chunk)
 
         setChatHistory(prev =>
           prev.map(chat => {
@@ -98,12 +102,6 @@ function App() {
           })
         );
       }
-
-      // setTimeout(() => {
-      //   bottomRef.current?.scrollIntoView({
-      //     behavior: "smooth",
-      //   });
-      // }, 0);
 
       setIsStreaming(false);
 

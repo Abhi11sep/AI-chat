@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import serverless from "serverless-http";
 
 dotenv.config();
 import groq from "./services/ai.js";
@@ -51,14 +52,8 @@ app.post("/api/chat", async (req, res) => {
     }
 });
 
-// app.post("/api/chat", (req, res) => {
-//     const { message } = req.body
-//     res.json({
-//         message: 'message sent successfully!',
-//         data: message
-//     });
-// })
 
-app.listen(PORT, () => {
-    console.log(`server is running on ${PORT}`)
-})
+// app.listen(PORT, () => {
+//     console.log(`server is running on ${PORT}`)
+// })
+export default serverless(app);
