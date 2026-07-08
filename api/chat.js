@@ -1,20 +1,6 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import serverless from "serverless-http";
+import groq from './ai.js'
 
-dotenv.config();
-import groq from "./services/ai.js";
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-app.get("/", (req, res) => {
-    res.send('api is running')
-})
-
-app.post("/api/chat", async (req, res) => {
+export default async function handler(req, res) {
     try {
         const { messages } = req.body;
 
@@ -24,7 +10,6 @@ app.post("/api/chat", async (req, res) => {
                 error: "Messages are required",
             });
         }
-
 
         const stream = await groq.chat.completions.create({
             model: "llama-3.3-70b-versatile",
@@ -47,6 +32,4 @@ app.post("/api/chat", async (req, res) => {
             error: "Something went wrong.",
         });
     }
-});
-
-export default serverless(app);
+}
