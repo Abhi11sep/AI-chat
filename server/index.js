@@ -10,9 +10,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
-const PORT = process.env.PORT || 5000;
-
 app.get("/", (req, res) => {
     res.send('api is running')
 })
@@ -52,8 +49,4 @@ app.post("/api/chat", async (req, res) => {
     }
 });
 
-
-// app.listen(PORT, () => {
-//     console.log(`server is running on ${PORT}`)
-// })
 export default serverless(app);
